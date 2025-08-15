@@ -1,309 +1,133 @@
 <!doctype html>
 <html lang="pt-BR">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Calendário Econômico · Guia WDO (Clean Dark)</title>
-  <meta name="description" content="Tabela clean & dark estilo Notion para o guia de notícias 3★ de WDO." />
-  <style>
-    :root{
-      --bg: #0b0c10;
-      --panel: #101218;
-      --panel-2:#0f1117;
-      --border:#1c2030;
-      --ink:#e8eaf2;
-      --muted:#aab3c5;
-      --accent:#6ea8fe;
-      --positive:#34d399;
-      --neutral:#fbbf24;
-      --negative:#f87171;
-      --radius:14px;
-      --shadow: 0 6px 18px rgba(0,0,0,.35);
-    }
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{margin:0;background:var(--bg);color:var(--ink);
-      font:15px/1.6 "Inter", "Segoe UI", Roboto, system-ui, -apple-system, Arial, sans-serif;
-      padding:22px 16px 40px}
-    .container{max-width:1100px;margin:0 auto}
-    h1{font-size:clamp(20px,3.5vw,30px);margin:0 0 4px 0;letter-spacing:.2px}
-    .subtitle{color:var(--muted);margin-bottom:16px}
-
-    .toolbar{display:grid;grid-template-columns:1.2fr .9fr .9fr auto auto;gap:10px;
-      background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);
-      box-shadow:var(--shadow);padding:12px}
-    .field{display:flex;flex-direction:column;gap:4px}
-    label{font-size:12px;color:var(--muted)}
-    input[type="text"], select{
-      background:var(--panel-2);color:var(--ink);border:1px solid var(--border);
-      border-radius:10px;padding:10px 12px;outline:none;transition: .2s border, .2s box-shadow
-    }
-    input[type="text"]:focus, select:focus{border-color:#24324a;box-shadow:0 0 0 3px rgba(110,168,254,.12)}
-
-    .btn{appearance:none;border:1px solid var(--border);background:var(--panel-2);color:var(--ink);
-      padding:10px 14px;border-radius:10px;cursor:pointer;font-weight:600}
-    .btn.primary{background:#1a2332;border-color:#283246}
-    .btn:hover{filter:brightness(1.05)}
-
-    .table-wrap{margin-top:14px;background:var(--panel);border:1px solid var(--border);
-      border-radius:var(--radius);box-shadow:var(--shadow);overflow:auto}
-    table{width:100%;border-collapse:collapse;min-width:1100px}
-    thead th{position:sticky;top:0;background:linear-gradient(180deg,#141926,#10141f);text-align:left;
-      font-size:12px;color:#d7dbe7;border-bottom:1px solid var(--border);padding:10px 12px;letter-spacing:.3px}
-    tbody td{padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.04);vertical-align:top}
-    tbody tr:nth-child(odd){background:rgba(255,255,255,.02)}
-    tbody tr:hover{background:rgba(110,168,254,.06)}
-    th.sortable{cursor:pointer}
-    th.sortable span{opacity:.9}
-
-    .tag{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border:1px solid var(--border);
-      border-radius:999px;background:var(--panel-2);font-size:12px}
-    .pill{display:inline-block;font-size:12px;padding:2px 8px;border-radius:999px;border:1px solid var(--border)}
-    .pill.up{border-color:rgba(52,211,153,.5)}
-    .pill.flat{border-color:rgba(251,191,36,.5)}
-    .pill.down{border-color:rgba(248,113,113,.5)}
-
-    .legend{margin-top:8px;color:var(--muted);font-size:12px}
-
-    .notice{margin-top:10px;color:var(--muted);font-size:12px}
-
-    .actions{display:flex;gap:8px;flex-wrap:wrap}
-
-    .editable td[contenteditable="true"]{outline:2px dashed #2b3b58;outline-offset:-2px;background:#111725}
-    .edit-toggle{display:flex;align-items:center;gap:8px}
-    .edit-toggle input{width:42px;height:22px;appearance:none;background:#2a3346;border-radius:22px;position:relative;outline:none;border:1px solid var(--border);cursor:pointer}
-    .edit-toggle input:checked{background:#2c7be5}
-    .edit-toggle input::after{content:"";position:absolute;top:2px;left:2px;width:18px;height:18px;background:#fff;border-radius:50%;transition:transform .2s ease}
-    .edit-toggle input:checked::after{transform:translateX(20px)}
-
-    @media (max-width: 980px){
-      .toolbar{grid-template-columns:1fr 1fr;}
-      table{min-width:1000px}
-    }
-  </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Calendário Econômico · Guia WDO (Clean Dark)</title>
+<style>
+:root{
+  --bg:#0b0c10;--panel:#101218;--panel-2:#0f1117;
+  --border:#1c2030;--ink:#e8eaf2;--muted:#aab3c5;
+  --radius:14px;--shadow:0 6px 18px rgba(0,0,0,.35);
+}
+body{margin:0;padding:20px;font-family:Inter,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--ink);}
+.container{max-width:1200px;margin:0 auto;}
+h1{margin:0 0 8px;font-size:26px;}
+.toolbar{display:grid;grid-template-columns:1.5fr 1fr 1fr auto auto;gap:10px;margin-bottom:12px;}
+input,select,button{border-radius:10px;border:1px solid var(--border);background:#101218;color:var(--ink);padding:8px;}
+button.primary{background:#1a2332;border-color:#283246;}
+.table-wrap{overflow:auto;background:var(--panel);border-radius:var(--radius);}
+table{width:100%;border-collapse:collapse;min-width:1000px;}
+th,td{padding:8px;border-bottom:1px solid rgba(255,255,255,.05);}
+th{position:sticky;top:0;background:#141926;}
+tbody tr:nth-child(odd){background:rgba(255,255,255,.02);}
+tbody tr:hover{background:rgba(110,168,254,.06);}
+.editable td[contenteditable]{outline:2px dashed #2b3b58;background:#111725;}
+</style>
 </head>
 <body>
-  <div class="container">
-    <h1>Calendário Econômico – Guia WDO</h1>
-    <div class="subtitle">Tabela clean & dark (estilo Notion). Horários em <strong>BRT</strong>. Você pode pesquisar, filtrar, ordenar, editar e exportar.</div>
-
-    <div class="toolbar">
-      <div class="field">
-        <label for="q">Busca</label>
-        <input id="q" type="text" placeholder="Ex.: CPI, petróleo, payroll, ISM, PCE..." />
-      </div>
-      <div class="field">
-        <label for="cat">Categoria</label>
-        <select id="cat">
-          <option value="">Todas</option>
-          <option>Inflação</option>
-          <option>Consumo</option>
-          <option>Emprego</option>
-          <option>Atividade</option>
-          <option>Energia</option>
-          <option>Confiança</option>
-          <option>Imobiliário</option>
-          <option>Política Monetária</option>
-          <option>Atividade Regional</option>
-        </select>
-      </div>
-      <div class="field">
-        <label for="freq">Frequência</label>
-        <select id="freq">
-          <option value="">Todas</option>
-          <option>Mensal</option>
-          <option>Semanal (quarta)</option>
-          <option>Semanal (quinta)</option>
-          <option>Trimestral</option>
-          <option>Aprox. 8 vezes/ano</option>
-          <option>Variável</option>
-        </select>
-      </div>
-      <div class="actions">
-        <button class="btn" id="btnImport">Importar CSV</button>
-        <button class="btn primary" id="btnExport">Exportar CSV</button>
-      </div>
-      <label class="edit-toggle" title="Editar células e salvar no navegador">
-        <input id="toggleEdit" type="checkbox" /> <span>Modo edição</span>
-      </label>
-    </div>
-
-    <div class="legend">Impacto no WDO: <span class="pill up">⬆️</span> Alta · <span class="pill flat">➡️</span> Neutro · <span class="pill down">⬇️</span> Queda</div>
-
-    <div class="table-wrap">
-      <table id="grid" aria-label="Guia econômico 3 estrelas">
-        <thead>
-          <tr>
-            <th class="sortable" data-key="Categoria"><span>Categoria</span></th>
-            <th class="sortable" data-key="Indicador"><span>Indicador</span></th>
-            <th class="sortable" data-key="Frequência"><span>Frequência</span></th>
-            <th class="sortable" data-key="Quando"><span>Quando (mês)</span></th>
-            <th class="sortable" data-key="Hora"><span>Hora (BRT)</span></th>
-            <th>Acima</th>
-            <th>Em linha</th>
-            <th>Abaixo</th>
-            <th class="sortable" data-key="WDO"><span>Impacto no WDO</span></th>
-            <th>Impacto Paralelo</th>
-            <th>Estratégia</th>
-          </tr>
-        </thead>
-        <tbody id="tbody"></tbody>
-      </table>
-    </div>
-
-    <div class="notice">As edições ficam salvas no seu navegador (localStorage). Para publicar mudanças no GitHub Pages, exporte CSV e substitua no repositório.</div>
+<div class="container">
+  <h1>Calendário Econômico – Guia WDO</h1>
+  <div class="toolbar">
+    <input type="text" id="q" placeholder="Buscar...">
+    <select id="cat"><option value="">Todas categorias</option><option>Inflação</option><option>Emprego</option></select>
+    <select id="freq"><option value="">Todas frequências</option><option>Mensal</option><option>Semanal</option></select>
+    <button id="btnImport">Importar CSV</button>
+    <button class="primary" id="btnExport">Exportar CSV</button>
   </div>
 
-  <input type="file" id="fileInput" accept=".csv" style="display:none" />
+  <div class="table-wrap">
+    <table id="grid">
+      <thead>
+        <tr>
+          <th>Categoria</th>
+          <th>Indicador</th>
+          <th>Frequência</th>
+          <th>Quando</th>
+          <th>Hora</th>
+          <th>Acima</th>
+          <th>Em linha</th>
+          <th>Abaixo</th>
+          <th>WDO</th>
+          <th>Paralelo</th>
+          <th>Estratégia</th>
+        </tr>
+      </thead>
+      <tbody id="tbody"></tbody>
+    </table>
+  </div>
+</div>
+
+<input type="file" id="fileInput" accept=".csv" style="display:none"/>
 
 <script>
-/* ======= JavaScript original com dados, render, filtros, sorting e CSV ======= */
 const DEFAULT_DATA = [
-  {Categoria:"Inflação", Indicador:"CPI (Índice de Preços ao Consumidor)", Frequência:"Mensal", Quando:"Geralmente na 2ª semana", Hora:"09:30", Acima:"Pressão inflacionária ↑", Em_linha:"Sem mudança relevante", Abaixo:"Desinflação", WDO:"Acima → ⬆️ · Abaixo → ⬇️", Paralelo:"Acima: juros ↑, índices ↓, ouro ↓ · Abaixo: juros ↓, índices ↑, ouro ↑", Estratégia:"Operar o 1º impulso; confirmar com DXY e juros (ZN/ZB)."},
-  {Categoria:"Inflação", Indicador:"Core CPI (Núcleo)", Frequência:"Mensal", Quando:"Junto ao CPI", Hora:"09:30", Acima:"Mais relevante que o cheio", Em_linha:"Neutro", Abaixo:"Sinal forte para cortes", WDO:"Move mais que o cheio; acima → ⬆️ forte", Paralelo:"Reação ampliada nos juros e índices", Estratégia:"Priorize o núcleo quando divergirem; 1ª vela 1–2 min."},
-  {Categoria:"Inflação", Indicador:"PPI (Produtor) e Core PPI", Frequência:"Mensal", Quando:"Após CPI", Hora:"09:30", Acima:"Custo ao produtor ↑ → repasse", Em_linha:"Neutro", Abaixo:"Desinflação na origem", WDO:"Alta → ⬆️ · Baixa → ⬇️ (menor que CPI)", Paralelo:"Juros acompanham; índices inverso", Estratégia:"Se CPI foi ambíguo, PPI define viés."},
-  /* ... todos os demais dados do seu DEFAULT_DATA ... */
+  {Categoria:"Inflação", Indicador:"CPI", Frequência:"Mensal", Quando:"2ª semana", Hora:"09:30", Acima:"Pressão ↑", "Em linha":"Neutro", Abaixo:"Desinflação ↓", WDO:"⬆️ / ⬇️", Paralelo:"Juros ↑ / ↓", Estratégia:"Operar impulso inicial"},
+  {Categoria:"Inflação", Indicador:"Core CPI", Frequência:"Mensal", Quando:"2ª semana", Hora:"09:30", Acima:"Alta ↑", "Em linha":"Neutro", Abaixo:"Baixa ↓", WDO:"⬆️ / ⬇️", Paralelo:"Juros ↑ / ↓", Estratégia:"Priorizar núcleo"},
+  {Categoria:"Emprego", Indicador:"Payroll", Frequência:"Mensal", Quando:"1ª sexta", Hora:"09:30", Acima:"Surpresa ↑", "Em linha":"Neutro", Abaixo:"Fraco ↓", WDO:"⬆️ / ⬇️", Paralelo:"Ações ↑ / ↓", Estratégia:"Seguir tendência inicial"}
 ];
 
-const STORAGE_KEY = 'wdo_guide_data_v1';
-let DATA = loadData();
-let sortState = { key:null, dir:1 };
+const STORAGE_KEY = 'wdo_guide_data_v2';
+let DATA = JSON.parse(localStorage.getItem(STORAGE_KEY)||'null')||DEFAULT_DATA;
 
-function loadData(){
-  try{
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if(raw){ return JSON.parse(raw); }
-  }catch(e){}
-  return DEFAULT_DATA;
-}
-function saveData(){
-  try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(DATA)); }catch(e){}
-}
-
+function saveData(){localStorage.setItem(STORAGE_KEY,JSON.stringify(DATA));}
 function render(rows){
   const tbody = document.getElementById('tbody');
-  tbody.innerHTML = '';
-  const editMode = document.getElementById('toggleEdit').checked;
-  const cols = ["Categoria","Indicador","Frequência","Quando","Hora","Acima","Em_linha","Abaixo","WDO","Paralelo","Estratégia"];
-  rows.forEach((r, idx) => {
-    const tr = document.createElement('tr');
-    cols.forEach(col => {
-      const td = document.createElement('td');
-      td.dataset.col = col;
-      if(col === 'Categoria'){
-        td.innerHTML = `<span class="tag">${escapeHtml(r[col]||'')}</span>`;
-      } else { td.textContent = r[col] || ''; }
-      if(editMode){ td.contentEditable = 'true'; }
-      td.addEventListener('blur', ()=>{
-        if(!document.getElementById('toggleEdit').checked) return;
-        const value = td.textContent.trim();
-        DATA[idx][col] = value;
-        saveData();
-        if(col==='Categoria') render(rows);
-      });
+  tbody.innerHTML='';
+  rows.forEach((r,idx)=>{
+    const tr=document.createElement('tr');
+    Object.keys(r).forEach(k=>{
+      const td=document.createElement('td');
+      td.textContent=r[k];
       tr.appendChild(td);
     });
     tbody.appendChild(tr);
   });
-  document.getElementById('grid').classList.toggle('editable', editMode);
-}
-
-function escapeHtml(s){
-  return String(s).replace(/[&<>\"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;','\'':'&#39;'}[m]));
 }
 
 function applyFilters(){
-  const q = document.getElementById('q').value.toLowerCase().trim();
-  const cat = document.getElementById('cat').value;
-  const freq = document.getElementById('freq').value;
-  let rows = DATA.filter(r => {
-    const text = (r.Categoria+" "+r.Indicador+" "+r.Frequência+" "+r.Quando+" "+r.Hora+" "+r.Acima+" "+r.Em_linha+" "+r.Abaixo+" "+r.WDO+" "+r.Paralelo+" "+r.Estratégia).toLowerCase();
-    if(q && !text.includes(q)) return false;
-    if(cat && r.Categoria !== cat) return false;
-    if(freq && r.Frequência !== freq) return false;
+  const q=document.getElementById('q').value.toLowerCase();
+  const cat=document.getElementById('cat').value;
+  const freq=document.getElementById('freq').value;
+  let rows=DATA.filter(r=>{
+    if(q && !Object.values(r).join(" ").toLowerCase().includes(q)) return false;
+    if(cat && r.Categoria!==cat) return false;
+    if(freq && r.Frequência!==freq) return false;
     return true;
   });
-  if(sortState.key){
-    const k = sortState.key, d = sortState.dir;
-    rows = rows.slice().sort((a,b)=> (a[k]||'').localeCompare(b[k]||'') * d);
-  }
   render(rows);
 }
 
-function attachSort(){
-  document.querySelectorAll('th.sortable').forEach(th => {
-    th.addEventListener('click', ()=>{
-      const key = th.dataset.key;
-      if(sortState.key===key){ sortState.dir *= -1; } else { sortState={key,dir:1}; }
-      applyFilters();
+document.getElementById('q').addEventListener('input',applyFilters);
+document.getElementById('cat').addEventListener('change',applyFilters);
+document.getElementById('freq').addEventListener('change',applyFilters);
+
+document.getElementById('btnExport').addEventListener('click',()=>{
+  const headers=Object.keys(DATA[0]);
+  const csv=[headers.join(',')].concat(DATA.map(r=>headers.map(h=>`"${r[h]}"`).join(','))).join('\n');
+  const blob=new Blob([csv],{type:'text/csv'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='guia_wdo.csv'; a.click();
+});
+
+document.getElementById('btnImport').addEventListener('click',()=>document.getElementById('fileInput').click());
+document.getElementById('fileInput').addEventListener('change',e=>{
+  const file=e.target.files[0]; if(!file)return;
+  const reader=new FileReader();
+  reader.onload=()=> {
+    const lines=reader.result.split(/\r?\n/).filter(Boolean);
+    const headers=lines[0].split(',');
+    DATA=lines.slice(1).map(l=>{
+      const vals=l.split(',').map(v=>v.replace(/^"|"$/g,''));
+      const obj={};
+      headers.forEach((h,i)=>obj[h]=vals[i]);
+      return obj;
     });
-  });
-}
+    saveData(); applyFilters();
+  };
+  reader.readAsText(file);
+});
 
-function toCSV(rows){
-  const headers = ["Categoria","Indicador","Frequência","Quando","Hora","Acima","Em_linha","Abaixo","WDO","Paralelo","Estratégia"];
-  const lines = [headers.join(',')].concat(rows.map(r => headers.map(h => '"'+String(r[h]??'').replaceAll('"','""')+'"').join(',')));
-  return lines.join('\n');
-}
-function downloadCSV(){
-  const rows = Array.from(document.querySelectorAll('#tbody tr')).map(tr => {
-    const obj = {};
-    const cols = ["Categoria","Indicador","Frequência","Quando","Hora","Acima","Em_linha","Abaixo","WDO","Paralelo","Estratégia"];
-    const tds = tr.querySelectorAll('td');
-    cols.forEach((c,i)=>{ obj[c] = tds[i].textContent.trim(); });
-    return obj;
-  });
-  const csv = toCSV(rows);
-  const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
-  const link = document.createElement('a');
-  link.href = URL.createObjectURL(blob);
-  link.download = 'guia_wdo_clean_dark.csv';
-  document.body.appendChild(link); link.click(); document.body.removeChild(link);
-}
-
-function importCSV(text){
-  const lines = text.split(/\r?\n/).filter(Boolean);
-  if(lines.length<2) return;
-  const headers = lines[0].split(',').map(s=>s.replace(/^\"|\"$/g,''));
-  const idx = h => headers.indexOf(h);
-  const required = ["Categoria","Indicador","Frequência","Quando","Hora","Acima","Em_linha","Abaixo","WDO","Paralelo","Estratégia"];
-  const ok = required.every(h => headers.includes(h));
-  if(!ok){ alert('CSV inválido. Use o arquivo exportado desta página.'); return; }
-  const arr = [];
-  for(let i=1;i<lines.length;i++){
-    const cols = parseCSVLine(lines[i]);
-    if(!cols || cols.length===0) continue;
-    const obj={}; required.forEach((h,ix)=> obj[h] = (cols[idx(h)]||'').replace(/^\"|\"$/g,''));
-    arr.push(obj);
-  }
-  DATA = arr; saveData(); applyFilters();
-}
-
-function parseCSVLine(line){
-  const out=[]; let cur=''; let q=false;
-  for(let i=0;i<line.length;i++){
-    const ch = line[i];
-    if(q){
-      if(ch==='"' && line[i+1]==='"'){ cur+='"'; i++; }
-      else if(ch==='"'){ q=false; }
-      else{ cur+=ch; }
-    } else {
-      if(ch===','){ out.push(cur); cur=''; }
-      else if(ch==='"'){ q=true; }
-      else { cur+=ch; }
-    }
-  }
-  out.push(cur);
-  return out;
-}
-
-// Events
-['q','cat','freq'].forEach(id => document.getElementById(id).addEventListener('input', applyFilters));
-document.getElementById('toggleEdit').addEventListener('change', ()=> render(DATA));
-document.getElementById('btnExport').addEventListener('click', downloadCSV);
-document.getElementById('btnImport').addEventListener('click', ()=> document.getElementById('fileInput').click());
-document.getElementById('fileInput').addEventListener('change', (e)=>{
-  const f = e.target.files[0]; if(!f) return;
-  const reader = new FileReader();
-  reader.onload = () => importCSV(reader.result);
- 
+render(DATA);
+</script>
+</body>
+</html>
