@@ -1,0 +1,649 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Guia Definitivo – Calendário Econômico (WDO) · Dark Neon UI</title>
+  <meta name="description" content="Guia de notícias 3 estrelas para operar dólar futuro (WDO) – tema Dark Neon UI." />
+  <style>
+    :root{
+      --bg: #0b0c1a;         /* fundo base */
+      --bg-2: #0f1030;       /* fundo cards */
+      --ink: #e7e7ff;        /* texto base */
+      --muted: #a9a9c9;      /* texto secundário */
+      --neon-1: #9b5cff;     /* roxo neon */
+      --neon-2: #00d1ff;     /* ciano neon */
+      --neon-3: #ff7a18;     /* laranja neon */
+      --ok: #2be38a;         /* verde */
+      --warn: #ffd166;       /* amarelo */
+      --bad: #ff4d6d;        /* vermelho */
+      --shadow: 0 10px 30px rgba(0,0,0,.45), 0 0 40px rgba(155,92,255,.08);
+      --radius: 18px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font: 15px/1.6 "Segoe UI", Roboto, Ubuntu, "Helvetica Neue", Arial, system-ui, -apple-system, sans-serif;
+      color:var(--ink);
+      background: radial-gradient(1200px 700px at 10% -10%, rgba(155,92,255,.08), transparent 60%),
+                  radial-gradient(1000px 600px at 100% 10%, rgba(0,209,255,.09), transparent 60%),
+                  linear-gradient(180deg, #0a0b1a 0%, #0b0c1a 40%, #0a0b1a 100%);
+      padding: 28px 18px 60px;
+    }
+    .container{max-width:1200px;margin:0 auto}
+    .title{
+      display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:0 0 10px 0
+    }
+    .logo{
+      width:38px;height:38px;border-radius:12px;background:linear-gradient(135deg,var(--neon-1),var(--neon-2));
+      box-shadow:0 0 24px rgba(155,92,255,.65), inset 0 0 20px rgba(0,209,255,.35);
+    }
+    h1{font-size:clamp(20px,3.2vw,32px);margin:0;font-weight:700;letter-spacing:.2px}
+    .subtitle{color:var(--muted);margin:6px 0 22px 0}
+
+    .panel{
+      background: linear-gradient(180deg, rgba(20,22,55,.7), rgba(12,12,35,.7));
+      border: 1px solid rgba(155,92,255,.35);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding:16px; margin-bottom:18px;
+      backdrop-filter: blur(6px);
+    }
+    .controls{display:grid;gap:12px;grid-template-columns: 1.2fr .9fr .9fr auto auto}
+    .controls .field{display:flex;flex-direction:column;gap:6px}
+    label{font-size:12px;color:var(--muted)}
+    input[type="text"], select{
+      background: #14143a; border:1px solid rgba(0,209,255,.25); color:var(--ink);
+      padding:10px 12px;border-radius:12px; outline:none; transition:.2s border, .2s box-shadow;
+    }
+    input[type="text"]:focus, select:focus{border-color:var(--neon-2);box-shadow:0 0 0 4px rgba(0,209,255,.12)}
+    .badges{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+    .badge{font-size:12px;padding:6px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.14);background:#161842;color:var(--ink)}
+
+    .btn{
+      appearance:none;border:0;border-radius:14px;padding:10px 14px;cursor:pointer;
+      color:#0a0b1a;background: linear-gradient(135deg, var(--neon-2), var(--neon-1));
+      font-weight:600; letter-spacing:.2px; box-shadow: 0 10px 20px rgba(155,92,255,.25), 0 0 18px rgba(0,209,255,.25);
+      transition: transform .05s ease, filter .25s ease;
+      white-space:nowrap
+    }
+    .btn.secondary{background: linear-gradient(135deg, #2b2d55, #1a1c3e); color: var(--ink); border:1px solid rgba(155,92,255,.35)}
+    .btn:active{transform: translateY(1px)}
+
+    .table-wrap{
+      background: linear-gradient(180deg, rgba(20,22,55,.75), rgba(10,10,28,.75));
+      border:1px solid rgba(0,209,255,.28);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    table{width:100%; border-collapse: collapse}
+    thead{position: sticky; top: 0; z-index: 10}
+    th{background: linear-gradient(180deg,#1b1d3f,#14163a); color:#dfe0ff; text-align:left; font-size:12px; letter-spacing:.3px; padding:12px 12px; border-bottom:1px solid rgba(255,255,255,.08)}
+    td{padding:12px; border-bottom:1px dashed rgba(255,255,255,.07); vertical-align: top}
+    tbody tr{transition: background .15s ease}
+    tbody tr:hover{background: rgba(155,92,255,.08)}
+
+    .cat{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border-radius:999px;background:#12133a;border:1px solid rgba(155,92,255,.35)}
+    .cat i{width:8px;height:8px;border-radius:999px;display:inline-block}
+    .cat.inf i{background:var(--neon-1)}
+    .cat.con i{background:var(--neon-2)}
+    .cat.emp i{background:var(--ok)}
+    .cat.ati i{background:var(--warn)}
+    .cat.ene i{background:var(--neon-3)}
+    .cat.confi i{background:#58c5ff}
+    .cat.imo i{background:#ff92b0}
+    .cat.pol i{background:#7df9ff}
+    .cat.reg i{background:#b096ff}
+
+    .pill{font-size:12px; padding:4px 8px; border-radius:999px; border:1px solid rgba(255,255,255,.12); background:#12133a}
+    .pill.up{border-color:rgba(43,227,138,.5)}
+    .pill.flat{border-color:rgba(255,209,102,.5)}
+    .pill.down{border-color:rgba(255,77,109,.45)}
+
+    .impact{display:flex; gap:6px; flex-wrap:wrap}
+
+    .footer{color:var(--muted); font-size:12px; margin-top:14px}
+
+    @media (max-width: 980px){
+      .controls{grid-template-columns:1fr 1fr;}
+      .btns{display:flex;gap:10px;flex-wrap:wrap}
+      td:nth-child(4), td:nth-child(5), td:nth-child(6){min-width:160px}
+      .table-wrap{overflow:auto}
+      table{min-width:1000px}
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="title">
+      <div class="logo" aria-hidden="true"></div>
+      <h1>Guia – Notícias 3★ para Operar Dólar Futuro (WDO)</h1>
+    </div>
+    <div class="subtitle">Tema <strong>Dark Neon UI</strong>. Filtros rápidos, busca e exportação. Horários em <strong>BRT</strong> (Brasília).</div>
+
+    <section class="panel">
+      <div class="controls">
+        <div class="field">
+          <label for="q">Busca (indicador, categoria, dica...)</label>
+          <input id="q" type="text" placeholder="Ex.: CPI, petróleo, payroll, ISM, PCE..." />
+        </div>
+        <div class="field">
+          <label for="cat">Categoria</label>
+          <select id="cat">
+            <option value="">Todas</option>
+            <option value="Inflação">Inflação</option>
+            <option value="Consumo">Consumo</option>
+            <option value="Emprego">Emprego</option>
+            <option value="Atividade">Atividade</option>
+            <option value="Energia">Energia</option>
+            <option value="Confiança">Confiança</option>
+            <option value="Imobiliário">Imobiliário</option>
+            <option value="Política Monetária">Política Monetária</option>
+            <option value="Atividade Regional">Atividade Regional</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="freq">Frequência</label>
+          <select id="freq">
+            <option value="">Todas</option>
+            <option>Mensal</option>
+            <option>Semanal (quarta)</option>
+            <option>Semanal (quinta)</option>
+            <option>Trimestral</option>
+            <option>Aprox. 8 vezes/ano</option>
+            <option>Variável</option>
+          </select>
+        </div>
+        <div class="btns" style="display:flex;gap:10px;align-items:flex-end">
+          <button class="btn" id="btnExport">Exportar CSV</button>
+          <button class="btn secondary" id="btnReset">Limpar filtros</button>
+        </div>
+      </div>
+      <div class="badges" style="margin-top:12px">
+        <span class="badge">Legenda impacto no WDO: <span class="pill up">⬆️</span> Alta · <span class="pill flat">➡️</span> Neutro · <span class="pill down">⬇️</span> Queda</span>
+      </div>
+    </section>
+
+    <div class="table-wrap">
+      <table id="grid" aria-label="Guia econômico 3 estrelas">
+        <thead>
+          <tr>
+            <th style="width:140px">Categoria</th>
+            <th style="width:260px">Indicador</th>
+            <th>Frequência</th>
+            <th>Quando (mês)</th>
+            <th>Hora (BRT)</th>
+            <th>Leitura</th>
+            <th>Impacto no WDO</th>
+            <th>Impacto Paralelo</th>
+            <th>Estratégia</th>
+          </tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+
+    <div class="footer">Dica: antes do gatilho, acompanhe <strong>DXY</strong>, <strong>US 10Y</strong> e <strong>ES/NQ</strong> para confirmar direção do primeiro impulso.</div>
+  </div>
+
+<script>
+const DATA = [
+  // === Inflação ===
+  {
+    Categoria: "Inflação",
+    Indicador: "CPI (Índice de Preços ao Consumidor)",
+    Frequência: "Mensal",
+    Quando: "Geralmente na 2ª semana",
+    Hora: "09:30",
+    Acima: "Pressão inflacionária ↑",
+    Em_linha: "Sem mudança relevante",
+    Abaixo: "Desinflação",
+    WDO: "Acima → ⬆️ | Abaixo → ⬇️",
+    Paralelo: "Acima: juros ↑, índices ↓, ouro ↓ · Abaixo: juros ↓, índices ↑, ouro ↑",
+    Estratégia: "Operar o 1º impulso; confirmar com DXY e juros (ZN/ZB). Stop curto."
+  },
+  {
+    Categoria: "Inflação",
+    Indicador: "Core CPI (Núcleo)",
+    Frequência: "Mensal",
+    Quando: "Junto ao CPI",
+    Hora: "09:30",
+    Acima: "Mais relevante que o cheio",
+    Em_linha: "Neutro",
+    Abaixo: "Sinal forte para cortes",
+    WDO: "Move mais que o cheio; acima → ⬆️ forte",
+    Paralelo: "Reação ampliada nos juros e índices",
+    Estratégia: "Priorize o núcleo quando divergirem; use a 1ª vela (1–2 min)."
+  },
+  {
+    Categoria: "Inflação",
+    Indicador: "PPI (Produtor) e Core PPI",
+    Frequência: "Mensal",
+    Quando: "Após CPI",
+    Hora: "09:30",
+    Acima: "Custo ao produtor ↑ → risco de repasse",
+    Em_linha: "Neutro",
+    Abaixo: "Desinflação na origem",
+    WDO: "Alta → ⬆️ · Baixa → ⬇️ (geralmente menor que CPI)",
+    Paralelo: "Juros acompanham; índices no inverso",
+    Estratégia: "Se CPI foi ambíguo, PPI pode definir o viés."
+  },
+  {
+    Categoria: "Inflação",
+    Indicador: "PCE e Core PCE (preferido do Fed)",
+    Frequência: "Mensal",
+    Quando: "Última semana útil",
+    Hora: "09:30",
+    Acima: "Reacende preocupação do Fed",
+    Em_linha: "Neutro suave",
+    Abaixo: "Confirma viés de cortes",
+    WDO: "Core PCE acima → ⬆️ · abaixo → ⬇️",
+    Paralelo: "Índices reagem forte; ouro inverso do dólar",
+    Estratégia: "Compare com tendência do CPI; trade menor que CPI."
+  },
+  // === Consumo ===
+  {
+    Categoria: "Consumo",
+    Indicador: "Vendas no Varejo (Retail Sales)",
+    Frequência: "Mensal",
+    Quando: "Meados do mês",
+    Hora: "09:30",
+    Acima: "Consumo aquecido",
+    Em_linha: "Neutro",
+    Abaixo: "Consumo fraco",
+    WDO: "Acima → ⬆️ · Abaixo → ⬇️",
+    Paralelo: "Acima: índices ↓ (mais juros); abaixo: índices ↑ (menos juros)",
+    Estratégia: "Dar mais peso ao Núcleo quando divergirem."
+  },
+  {
+    Categoria: "Consumo",
+    Indicador: "Núcleo de Varejo (ex-auto/comb.)",
+    Frequência: "Mensal",
+    Quando: "Com Retail Sales",
+    Hora: "09:30",
+    Acima: "Demanda subjacente forte",
+    Em_linha: "Neutro",
+    Abaixo: "Demanda subjacente fraca",
+    WDO: "Move mais que o cheio se divergirem",
+    Paralelo: "Mesma lógica do Retail Sales",
+    Estratégia: "Impulso 1–3 min; não force contra a 1ª perna."
+  },
+  // === Emprego ===
+  {
+    Categoria: "Emprego",
+    Indicador: "Payroll (Nonfarm Payrolls)",
+    Frequência: "Mensal",
+    Quando: "1ª sexta-feira",
+    Hora: "09:30",
+    Acima: "Mercado aquecido",
+    Em_linha: "Neutro relativo",
+    Abaixo: "Arrefecimento",
+    WDO: "Acima → ⬆️ forte · Abaixo → ⬇️ forte",
+    Paralelo: "Juros seguem $; índices no inverso",
+    Estratégia: "Olhe salários e desemprego; se divergirem, espere 1–2 min."
+  },
+  {
+    Categoria: "Emprego",
+    Indicador: "Taxa de Desemprego",
+    Frequência: "Mensal",
+    Quando: "Com Payroll",
+    Hora: "09:30",
+    Acima: "Desaceleração",
+    Em_linha: "Neutro",
+    Abaixo: "Aquecimento",
+    WDO: "Acima → ⬇️ · Abaixo → ⬆️ (pode moderar o Payroll)",
+    Paralelo: "Índices no inverso do dólar",
+    Estratégia: "Se Payroll ↑ e desemprego ↑, o mercado pode travar; aguarde."
+  },
+  {
+    Categoria: "Emprego",
+    Indicador: "Ganhos Médios por Hora (Salários)",
+    Frequência: "Mensal",
+    Quando: "Com Payroll",
+    Hora: "09:30",
+    Acima: "Pressão inflacionária salarial",
+    Em_linha: "Neutro",
+    Abaixo: "Menor pressão",
+    WDO: "Acima → ⬆️ (via inflação) · Abaixo → ⬇️",
+    Paralelo: "Juros reagem muito; índices inverso",
+    Estratégia: "Em divergência com Payroll, salários mandam no 2º movimento."
+  },
+  {
+    Categoria: "Emprego",
+    Indicador: "ADP Empregos Privados",
+    Frequência: "Mensal",
+    Quando: "~2 dias antes do Payroll",
+    Hora: "09:15",
+    Acima: "Aquecimento",
+    Em_linha: "Neutro",
+    Abaixo: "Arrefecimento",
+    WDO: "Direção semelhante ao Payroll, mas impacto menor",
+    Paralelo: "Movimento mais curto",
+    Estratégia: "Útil para viés do Payroll; evite overtrade."
+  },
+  {
+    Categoria: "Emprego",
+    Indicador: "Pedidos Iniciais de Seguro-Desemprego",
+    Frequência: "Semanal (quinta)",
+    Quando: "Toda quinta",
+    Hora: "09:30",
+    Acima: "Mercado de trabalho enfraquecendo",
+    Em_linha: "Neutro",
+    Abaixo: "Mercado forte",
+    WDO: "Acima → ⬇️ · Abaixo → ⬆️ (impacto moderado)",
+    Paralelo: "Juros e índices reagem conforme",
+    Estratégia: "Funciona quando há grande desvio do consenso."
+  },
+  // === Atividade ===
+  {
+    Categoria: "Atividade",
+    Indicador: "PIB (GDP) – preliminar/revisões",
+    Frequência: "Trimestral",
+    Quando: "Fim do mês seguinte ao tri",
+    Hora: "09:30",
+    Acima: "Crescimento forte",
+    Em_linha: "Neutro",
+    Abaixo: "Crescimento fraco",
+    WDO: "Acima → ⬆️ · Abaixo → ⬇️ (preço tende a antecipar)",
+    Paralelo: "Índices no inverso do $",
+    Estratégia: "Olhe o deflator do PIB no mesmo horário."
+  },
+  {
+    Categoria: "Atividade",
+    Indicador: "ISM Manufacturing PMI",
+    Frequência: "Mensal",
+    Quando: "1º dia útil do mês",
+    Hora: "11:00",
+    Acima: "Acima de 50 = expansão",
+    Em_linha: "Neutro",
+    Abaixo: "Abaixo de 50 = contração",
+    WDO: "Acima → ⬆️ · Abaixo → ⬇️",
+    Paralelo: "Índices reagem inverso ao dólar",
+    Estratégia: "Foco em 'preços pagos' (inflação)."
+  },
+  {
+    Categoria: "Atividade",
+    Indicador: "ISM Services PMI",
+    Frequência: "Mensal",
+    Quando: "1ª semana",
+    Hora: "11:00",
+    Acima: "Serviços fortes",
+    Em_linha: "Neutro",
+    Abaixo: "Serviços fracos",
+    WDO: "Impacto maior que Manufacturing",
+    Paralelo: "Mesma lógica",
+    Estratégia: "Olhe 'preços pagos' e emprego."
+  },
+  {
+    Categoria: "Atividade",
+    Indicador: "JOLTS – Abertura de Vagas",
+    Frequência: "Mensal",
+    Quando: "Início do mês seguinte",
+    Hora: "11:00",
+    Acima: "Demanda por trabalho forte",
+    Em_linha: "Neutro",
+    Abaixo: "Arrefecimento",
+    WDO: "Acima → ⬆️ · Abaixo → ⬇️ (sensível em ciclos de emprego)",
+    Paralelo: "Juros seguem",
+    Estratégia: "Maior impacto quando Payroll anterior foi extremo."
+  },
+  {
+    Categoria: "Atividade",
+    Indicador: "Bens Duráveis (Durable Goods)",
+    Frequência: "Mensal",
+    Quando: "Última semana",
+    Hora: "09:30",
+    Acima: "Investimento empresarial forte",
+    Em_linha: "Neutro",
+    Abaixo: "Investimento fraco",
+    WDO: "Impacto moderado",
+    Paralelo: "Afeta juros longos",
+    Estratégia: "Olhe o núcleo (ex-transporte)."
+  },
+  // === Energia ===
+  {
+    Categoria: "Energia",
+    Indicador: "EIA – Estoques de Petróleo Bruto",
+    Frequência: "Semanal (quarta)",
+    Quando: "Quase toda quarta",
+    Hora: "11:30",
+    Acima: "Aumento de estoques (pressão baixista no WTI)",
+    Em_linha: "Neutro",
+    Abaixo: "Queda de estoques (pressão altista)",
+    WDO: "Indireto: WTI ↑ tende a $ ⬇️; WTI ↓ tende a $ ⬆️",
+    Paralelo: "Afeta WTI/Brent; índice varia",
+    Estratégia: "Use como coadjuvante; foco é petróleo, não WDO."
+  },
+  // === Confiança ===
+  {
+    Categoria: "Confiança",
+    Indicador: "Consumer Confidence (Conference Board)",
+    Frequência: "Mensal",
+    Quando: "Última semana",
+    Hora: "11:00",
+    Acima: "Confiança ↑",
+    Em_linha: "Neutro",
+    Abaixo: "Confiança ↓",
+    WDO: "Impacto moderado",
+    Paralelo: "Índices tendem a acompanhar",
+    Estratégia: "Confirma tendência do consumo."
+  },
+  {
+    Categoria: "Confiança",
+    Indicador: "Michigan Sentiment (prelim./final)",
+    Frequência: "Mensal",
+    Quando: "Meio e fim do mês",
+    Hora: "11:00",
+    Acima: "Sentimento ↑ (olhar expectativas de inflação)",
+    Em_linha: "Neutro",
+    Abaixo: "Sentimento ↓",
+    WDO: "Impacto aumenta se expectativas surpreendem",
+    Paralelo: "Juros reagem às expectativas",
+    Estratégia: "Se 'inflation expectations' divergir, siga ela."
+  },
+  // === Imobiliário ===
+  {
+    Categoria: "Imobiliário",
+    Indicador: "Início de Construções (Housing Starts)",
+    Frequência: "Mensal",
+    Quando: "Meados do mês",
+    Hora: "09:30",
+    Acima: "Atividade imobiliária ↑",
+    Em_linha: "Neutro",
+    Abaixo: "Atividade ↓",
+    WDO: "Baixo a moderado",
+    Paralelo: "Afeta setores sensíveis a juros",
+    Estratégia: "Olhe Licenças de Construção."
+  },
+  {
+    Categoria: "Imobiliário",
+    Indicador: "Licenças de Construção (Building Permits)",
+    Frequência: "Mensal",
+    Quando: "Meados do mês",
+    Hora: "09:30",
+    Acima: "Pipeline de obras ↑",
+    Em_linha: "Neutro",
+    Abaixo: "Pipeline ↓",
+    WDO: "Baixo a moderado",
+    Paralelo: "Similar a Housing Starts",
+    Estratégia: "Complemento; evite alavancagem alta."
+  },
+  {
+    Categoria: "Imobiliário",
+    Indicador: "Vendas de Casas Novas (New Home Sales)",
+    Frequência: "Mensal",
+    Quando: "Fim do mês",
+    Hora: "11:00",
+    Acima: "Setor aquecido",
+    Em_linha: "Neutro",
+    Abaixo: "Setor esfriando",
+    WDO: "Baixo a moderado",
+    Paralelo: "Sensível a juros longos",
+    Estratégia: "Menor impacto que ISM/Payroll."
+  },
+  {
+    Categoria: "Imobiliário",
+    Indicador: "Vendas de Casas Existentes (Existing Home Sales)",
+    Frequência: "Mensal",
+    Quando: "Terceira semana",
+    Hora: "11:00",
+    Acima: "Mercado secundário aquecido",
+    Em_linha: "Neutro",
+    Abaixo: "Arrefecimento",
+    WDO: "Baixo a moderado",
+    Paralelo: "Construção/financiamento",
+    Estratégia: "Evite alavancagem alta."
+  },
+  // === Política Monetária ===
+  {
+    Categoria: "Política Monetária",
+    Indicador: "Decisão de Juros do Fed (FOMC)",
+    Frequência: "Aprox. 8 vezes/ano",
+    Quando: "Datas pré-agendadas",
+    Hora: "15:00 (coletiva 15:30)",
+    Acima: "Alta surpresa",
+    Em_linha: "Foco no comunicado",
+    Abaixo: "Corte surpresa",
+    WDO: "Altíssimo impacto; segue a surpresa",
+    Paralelo: "Juros disparam; índices e ouro reagem forte",
+    Estratégia: "Evite operar no exato minuto; prefira pós-coletiva."
+  },
+  {
+    Categoria: "Política Monetária",
+    Indicador: "Ata do FOMC (minutes)",
+    Frequência: "~3 semanas após a reunião",
+    Quando: "Datas pré-agendadas",
+    Hora: "15:00",
+    Acima: "Tom hawkish",
+    Em_linha: "Neutro",
+    Abaixo: "Tom dovish",
+    WDO: "Médio a alto se houver surpresa",
+    Paralelo: "Reprecifica a curva de juros",
+    Estratégia: "Leia as manchetes antes de agir."
+  },
+  {
+    Categoria: "Política Monetária",
+    Indicador: "Discursos do Powell / membros do Fed",
+    Frequência: "Variável",
+    Quando: "Ao longo do mês",
+    Hora: "Variável",
+    Acima: "Hawkish (sinal de juros altos)",
+    Em_linha: "Neutro",
+    Abaixo: "Dovish (sinal de cortes)",
+    WDO: "Pode gerar movimentos rápidos",
+    Paralelo: "Juros e índices reagem a frases-chave",
+    Estratégia: "Operar só headlines claras; risco de whipsaw."
+  },
+  // === Regionais ===
+  {
+    Categoria: "Atividade Regional",
+    Indicador: "Empire State / Philly Fed Manufacturing",
+    Frequência: "Mensal",
+    Quando: "Início/Meados",
+    Hora: "09:30",
+    Acima: "Atividade regional ↑",
+    Em_linha: "Neutro",
+    Abaixo: "Atividade ↓",
+    WDO: "Baixo a moderado (maior em períodos sensíveis)",
+    Paralelo: "Afeta expectativas do ISM",
+    Estratégia: "Úteis como 'teaser' para ISM."
+  },
+];
+
+function render(rows){
+  const tbody = document.getElementById('tbody');
+  tbody.innerHTML = '';
+  for(const r of rows){
+    const tr = document.createElement('tr');
+
+    const catMap = {
+      'Inflação':'inf','Consumo':'con','Emprego':'emp','Atividade':'ati','Energia':'ene',
+      'Confiança':'confi','Imobiliário':'imo','Política Monetária':'pol','Atividade Regional':'reg'
+    };
+    const catClass = catMap[r.Categoria]||'inf';
+
+    tr.innerHTML = `
+      <td><span class="cat ${catClass}"><i></i>${r.Categoria}</span></td>
+      <td><strong>${r.Indicador}</strong></td>
+      <td>${r.Frequência}</td>
+      <td>${r.Quando}</td>
+      <td>${r.Hora}</td>
+      <td>
+        <div class="impact">
+          <span class="pill up">Acima: ${escapeHtml(r.Acima||'')}</span>
+          <span class="pill flat">Em linha: ${escapeHtml(r.Em_linha||'')}</span>
+          <span class="pill down">Abaixo: ${escapeHtml(r.Abaixo||'')}</span>
+        </div>
+      </td>
+      <td>${r.WDO}</td>
+      <td>${r.Paralelo}</td>
+      <td>${r.Estratégia}</td>
+    `;
+    tbody.appendChild(tr);
+  }
+}
+
+function escapeHtml(s){
+  return String(s).replace(/[&<>\"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;','\'':'&#39;'}[m]));
+}
+
+function applyFilters(){
+  const q = document.getElementById('q').value.toLowerCase().trim();
+  const cat = document.getElementById('cat').value;
+  const freq = document.getElementById('freq').value;
+  const rows = DATA.filter(r => {
+    const text = (r.Categoria + ' ' + r.Indicador + ' ' + r.Frequência + ' ' + r.Quando + ' ' + r.Hora + ' ' + r.Acima + ' ' + r.Em_linha + ' ' + r.Abaixo + ' ' + r.WDO + ' ' + r.Paralelo + ' ' + r.Estratégia).toLowerCase();
+    if(q && !text.includes(q)) return false;
+    if(cat && r.Categoria !== cat) return false;
+    if(freq && r.Frequência !== freq) return false;
+    return true;
+  });
+  render(rows);
+}
+
+function resetFilters(){
+  document.getElementById('q').value='';
+  document.getElementById('cat').value='';
+  document.getElementById('freq').value='';
+  render(DATA);
+}
+
+function exportCSV(){
+  const headers = ['Categoria','Indicador','Frequência','Quando (mês)','Hora (BRT)','Leitura acima','Leitura em linha','Leitura abaixo','Impacto no WDO','Impacto Paralelo','Estratégia'];
+  const rows = Array.from(document.querySelectorAll('#tbody tr')).map(tr => {
+    const tds = tr.querySelectorAll('td');
+    const leitura = tds[5];
+    const [ac, em, ab] = leitura.querySelectorAll('.pill');
+    return [
+      tds[0].innerText.replace(/\n/g,' ').trim(),
+      tds[1].innerText.trim(),
+      tds[2].innerText.trim(),
+      tds[3].innerText.trim(),
+      tds[4].innerText.trim(),
+      ac?ac.innerText.replace('Acima: ','').trim():'',
+      em?em.innerText.replace('Em linha: ','').trim():'',
+      ab?ab.innerText.replace('Abaixo: ','').trim():'',
+      tds[6].innerText.trim(),
+      tds[7].innerText.trim(),
+      tds[8].innerText.trim(),
+    ];
+  });
+  const csv = [headers].concat(rows).map(r => r.map(v => '"'+String(v).replaceAll('"','""')+'"').join(',')).join('\n');
+  const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
+  const link = document.createElement('a');
+  link.href = URL.createObjectURL(blob);
+  link.download = 'guia_calendario_WDO_darkneon.csv';
+  document.body.appendChild(link); link.click(); document.body.removeChild(link);
+}
+
+document.getElementById('q').addEventListener('input', applyFilters);
+['cat','freq'].forEach(id => document.getElementById(id).addEventListener('change', applyFilters));
+document.getElementById('btnReset').addEventListener('click', resetFilters);
+document.getElementById('btnExport').addEventListener('click', exportCSV);
+
+render(DATA);
+</script>
+</body>
+</html>
