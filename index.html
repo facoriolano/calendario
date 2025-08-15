@@ -1,39 +1,92 @@
 <!doctype html>
 <html lang="pt-BR">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Calendário Econômico · Guia WDO (Clean Dark)</title>
-<style>
-:root{
-  --bg:#0b0c10;--panel:#101218;--panel-2:#0f1117;
-  --border:#1c2030;--ink:#e8eaf2;--muted:#aab3c5;
-  --radius:14px;--shadow:0 6px 18px rgba(0,0,0,.35);
-}
-body{margin:0;padding:20px;font-family:Inter,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--ink);}
-.container{max-width:1200px;margin:0 auto;}
-h1{margin:0 0 8px;font-size:26px;}
-.toolbar{display:grid;grid-template-columns:1.5fr 1fr 1fr auto auto;gap:10px;margin-bottom:12px;}
-input,select,button{border-radius:10px;border:1px solid var(--border);background:#101218;color:var(--ink);padding:8px;}
-button.primary{background:#1a2332;border-color:#283246;}
-.table-wrap{overflow:auto;background:var(--panel);border-radius:var(--radius);}
-table{width:100%;border-collapse:collapse;min-width:1000px;}
-th,td{padding:8px;border-bottom:1px solid rgba(255,255,255,.05);}
-th{position:sticky;top:0;background:#141926;}
-tbody tr:nth-child(odd){background:rgba(255,255,255,.02);}
-tbody tr:hover{background:rgba(110,168,254,.06);}
-.editable td[contenteditable]{outline:2px dashed #2b3b58;background:#111725;}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Calendário Econômico · Guia WDO</title>
+  <style>
+    :root {
+      --bg: #0b0c10;
+      --panel: #101218;
+      --panel-2:#0f1117;
+      --border:#1c2030;
+      --ink:#e8eaf2;
+      --muted:#aab3c5;
+      --accent:#6ea8fe;
+      --positive:#34d399;
+      --neutral:#fbbf24;
+      --negative:#f87171;
+      --radius:14px;
+      --shadow: 0 6px 18px rgba(0,0,0,.35);
+    }
+    * { box-sizing:border-box; }
+    html, body { height:100%; margin:0; padding:20px; background:var(--bg); color:var(--ink); font-family:"Inter","Segoe UI",Roboto,sans-serif; }
+    h1 { font-size:2rem; margin-bottom:0.2rem; }
+    .subtitle { color:var(--muted); margin-bottom:16px; }
+    .toolbar { display:flex; flex-wrap:wrap; gap:10px; margin-bottom:12px; }
+    .field { display:flex; flex-direction:column; }
+    .field label { font-size:12px; color:var(--muted); margin-bottom:4px; }
+    input, select { padding:8px 10px; border-radius:10px; border:1px solid var(--border); background:var(--panel-2); color:var(--ink); }
+    .btn { padding:8px 12px; border-radius:10px; border:1px solid var(--border); background:var(--panel-2); color:var(--ink); cursor:pointer; font-weight:600; }
+    .btn.primary { background:#1a2332; border-color:#283246; }
+    .table-wrap { overflow:auto; border-radius:var(--radius); box-shadow:var(--shadow); border:1px solid var(--border); }
+    table { width:100%; border-collapse:collapse; min-width:1000px; }
+    thead th { position:sticky; top:0; background:var(--panel); color:var(--ink); padding:10px; border-bottom:1px solid var(--border); text-align:left; font-size:12px; }
+    tbody td { padding:10px; border-bottom:1px solid rgba(255,255,255,0.05); vertical-align:top; font-size:13px; }
+    tbody tr:nth-child(odd){ background: rgba(255,255,255,0.02); }
+    tbody tr:hover { background: rgba(110,168,254,.06); }
+    .tag { display:inline-block; padding:2px 8px; border-radius:999px; border:1px solid var(--border); background:var(--panel-2); font-size:12px; }
+    .pill { display:inline-block; font-size:12px; padding:2px 8px; border-radius:999px; border:1px solid var(--border); }
+    .pill.up { border-color:rgba(52,211,153,.5); }
+    .pill.flat { border-color:rgba(251,191,36,.5); }
+    .pill.down { border-color:rgba(248,113,113,.5); }
+    .legend { margin-top:8px; font-size:12px; color:var(--muted); }
+    .notice { margin-top:10px; font-size:12px; color:var(--muted); }
+    .editable td[contenteditable="true"] { outline:2px dashed #2b3b58; background:#111725; }
+  </style>
 </head>
 <body>
-<div class="container">
   <h1>Calendário Econômico – Guia WDO</h1>
+  <div class="subtitle">Tabela clean & dark (estilo Notion). Horários em <strong>BRT</strong>. Pesquise, filtre, edite e exporte.</div>
+
   <div class="toolbar">
-    <input type="text" id="q" placeholder="Buscar...">
-    <select id="cat"><option value="">Todas categorias</option><option>Inflação</option><option>Emprego</option></select>
-    <select id="freq"><option value="">Todas frequências</option><option>Mensal</option><option>Semanal</option></select>
-    <button id="btnImport">Importar CSV</button>
-    <button class="primary" id="btnExport">Exportar CSV</button>
+    <div class="field">
+      <label for="q">Busca</label>
+      <input id="q" type="text" placeholder="Ex.: CPI, petróleo, payroll..." />
+    </div>
+    <div class="field">
+      <label for="cat">Categoria</label>
+      <select id="cat">
+        <option value="">Todas</option>
+        <option>Inflação</option>
+        <option>Consumo</option>
+        <option>Emprego</option>
+        <option>Atividade</option>
+        <option>Energia</option>
+        <option>Confiança</option>
+        <option>Imobiliário</option>
+        <option>Política Monetária</option>
+        <option>Atividade Regional</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="freq">Frequência</label>
+      <select id="freq">
+        <option value="">Todas</option>
+        <option>Mensal</option>
+        <option>Semanal (quarta)</option>
+        <option>Semanal (quinta)</option>
+        <option>Trimestral</option>
+        <option>Aprox. 8 vezes/ano</option>
+        <option>Variável</option>
+      </select>
+    </div>
+    <button class="btn" id="btnImport">Importar CSV</button>
+    <button class="btn primary" id="btnExport">Exportar CSV</button>
+  </div>
+
+  <div class="legend">
+    Impacto no WDO: <span class="pill up">⬆️ Alta</span> · <span class="pill flat">➡️ Neutro</span> · <span class="pill down">⬇️ Queda</span>
   </div>
 
   <div class="table-wrap">
@@ -44,90 +97,48 @@ tbody tr:hover{background:rgba(110,168,254,.06);}
           <th>Indicador</th>
           <th>Frequência</th>
           <th>Quando</th>
-          <th>Hora</th>
+          <th>Hora (BRT)</th>
           <th>Acima</th>
           <th>Em linha</th>
           <th>Abaixo</th>
-          <th>WDO</th>
-          <th>Paralelo</th>
+          <th>Impacto no WDO</th>
+          <th>Impacto Paralelo</th>
           <th>Estratégia</th>
         </tr>
       </thead>
       <tbody id="tbody"></tbody>
     </table>
   </div>
-</div>
 
-<input type="file" id="fileInput" accept=".csv" style="display:none"/>
+  <div class="notice">Edições ficam salvas no navegador. Para publicar no GitHub Pages, exporte CSV e substitua no repositório.</div>
+  <input type="file" id="fileInput" accept=".csv" style="display:none">
 
 <script>
-const DEFAULT_DATA = [
-  {Categoria:"Inflação", Indicador:"CPI", Frequência:"Mensal", Quando:"2ª semana", Hora:"09:30", Acima:"Pressão ↑", "Em linha":"Neutro", Abaixo:"Desinflação ↓", WDO:"⬆️ / ⬇️", Paralelo:"Juros ↑ / ↓", Estratégia:"Operar impulso inicial"},
-  {Categoria:"Inflação", Indicador:"Core CPI", Frequência:"Mensal", Quando:"2ª semana", Hora:"09:30", Acima:"Alta ↑", "Em linha":"Neutro", Abaixo:"Baixa ↓", WDO:"⬆️ / ⬇️", Paralelo:"Juros ↑ / ↓", Estratégia:"Priorizar núcleo"},
-  {Categoria:"Emprego", Indicador:"Payroll", Frequência:"Mensal", Quando:"1ª sexta", Hora:"09:30", Acima:"Surpresa ↑", "Em linha":"Neutro", Abaixo:"Fraco ↓", WDO:"⬆️ / ⬇️", Paralelo:"Ações ↑ / ↓", Estratégia:"Seguir tendência inicial"}
+// Dados padrão
+const DATA = [
+  {Categoria:"Inflação", Indicador:"CPI", Frequência:"Mensal", Quando:"2ª semana", Hora:"09:30", Acima:"Pressão ↑", Em_linha:"Neutro", Abaixo:"Desinflação", WDO:"Acima ⬆️ / Abaixo ⬇️", Paralelo:"Índices ↓ / ↑", Estratégia:"Operar 1º impulso"},
+  {Categoria:"Emprego", Indicador:"Payroll", Frequência:"Mensal", Quando:"1ª sexta", Hora:"09:30", Acima:"Alta ↑", Em_linha:"Neutro", Abaixo:"Baixa ↓", WDO:"Acima ⬆️ / Abaixo ⬇️", Paralelo:"Índices ↓ / ↑", Estratégia:"Observar 1–2 min"},
+  {Categoria:"Atividade", Indicador:"PIB", Frequência:"Trimestral", Quando:"Fim do mês seguinte", Hora:"09:30", Acima:"Crescimento ↑", Em_linha:"Neutro", Abaixo:"Fraco ↓", WDO:"Acima ⬆️ / Abaixo ⬇️", Paralelo:"Índices inversos", Estratégia:"Observar deflator"},
+  {Categoria:"Política Monetária", Indicador:"Fed Rate", Frequência:"Aprox. 8 vezes/ano", Quando:"Datas pré-agendadas", Hora:"15:00", Acima:"Alta surpresa", Em_linha:"Foco comunicado", Abaixo:"Corte surpresa", WDO:"Impacto alto", Paralelo:"Juros/Índices/Ouro", Estratégia:"Evitar minuto exato"}
 ];
 
-const STORAGE_KEY = 'wdo_guide_data_v2';
-let DATA = JSON.parse(localStorage.getItem(STORAGE_KEY)||'null')||DEFAULT_DATA;
-
-function saveData(){localStorage.setItem(STORAGE_KEY,JSON.stringify(DATA));}
-function render(rows){
+// Render
+function render(){
   const tbody = document.getElementById('tbody');
-  tbody.innerHTML='';
-  rows.forEach((r,idx)=>{
-    const tr=document.createElement('tr');
-    Object.keys(r).forEach(k=>{
-      const td=document.createElement('td');
-      td.textContent=r[k];
+  tbody.innerHTML = '';
+  DATA.forEach(r=>{
+    const tr = document.createElement('tr');
+    Object.keys(DATA[0]).forEach(col=>{
+      const td = document.createElement('td');
+      if(col==="Categoria") td.innerHTML=`<span class="tag">${r[col]}</span>`;
+      else td.textContent = r[col];
       tr.appendChild(td);
     });
     tbody.appendChild(tr);
   });
 }
 
-function applyFilters(){
-  const q=document.getElementById('q').value.toLowerCase();
-  const cat=document.getElementById('cat').value;
-  const freq=document.getElementById('freq').value;
-  let rows=DATA.filter(r=>{
-    if(q && !Object.values(r).join(" ").toLowerCase().includes(q)) return false;
-    if(cat && r.Categoria!==cat) return false;
-    if(freq && r.Frequência!==freq) return false;
-    return true;
-  });
-  render(rows);
-}
-
-document.getElementById('q').addEventListener('input',applyFilters);
-document.getElementById('cat').addEventListener('change',applyFilters);
-document.getElementById('freq').addEventListener('change',applyFilters);
-
-document.getElementById('btnExport').addEventListener('click',()=>{
-  const headers=Object.keys(DATA[0]);
-  const csv=[headers.join(',')].concat(DATA.map(r=>headers.map(h=>`"${r[h]}"`).join(','))).join('\n');
-  const blob=new Blob([csv],{type:'text/csv'});
-  const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='guia_wdo.csv'; a.click();
-});
-
-document.getElementById('btnImport').addEventListener('click',()=>document.getElementById('fileInput').click());
-document.getElementById('fileInput').addEventListener('change',e=>{
-  const file=e.target.files[0]; if(!file)return;
-  const reader=new FileReader();
-  reader.onload=()=> {
-    const lines=reader.result.split(/\r?\n/).filter(Boolean);
-    const headers=lines[0].split(',');
-    DATA=lines.slice(1).map(l=>{
-      const vals=l.split(',').map(v=>v.replace(/^"|"$/g,''));
-      const obj={};
-      headers.forEach((h,i)=>obj[h]=vals[i]);
-      return obj;
-    });
-    saveData(); applyFilters();
-  };
-  reader.readAsText(file);
-});
-
-render(DATA);
+render();
 </script>
 </body>
 </html>
